@@ -22,23 +22,64 @@ export default function LoginPage({ onLogin }) {
   }
 
   return (
-    <div className="login-panel card">
-      <h2 style={{ marginTop: 0 }}>Sign in</h2>
-      <p style={{ color: '#5b718c' }}>Enter an email to get a token. Seeds: mia@gearguard.local, tom@gearguard.local, uma@gearguard.local</p>
-      <form onSubmit={submit} className="grid-2">
-        <div>
-          <label>Email</label>
-          <input className="input" value={email} onChange={e => setEmail(e.target.value)} />
+    <div className="login-wrapper">
+      <div className="login-panel card">
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <div className="login-logo">⚙️</div>
+          <h1 className="login-title">Guardians</h1>
+          <p className="login-subtitle">Equipment Maintenance Management</p>
         </div>
-        <div>
-          <label>Name (optional)</label>
-          <input className="input" value={name} onChange={e => setName(e.target.value)} />
+        
+        <h2 style={{ marginTop: 0, fontSize: 28, fontWeight: 700, marginBottom: 8 }}>Sign in</h2>
+        <form onSubmit={submit}>
+          <div style={{ display: 'grid', gap: 20, marginBottom: 24 }}>
+            <div className="input-group">
+              <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, fontSize: 14, color: '#0c1f36' }}>Email</label>
+              <input 
+                className="input" 
+                value={email} 
+                onChange={e => setEmail(e.target.value)}
+                placeholder="your.email@gearguard.local"
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, fontSize: 14, color: '#0c1f36' }}>Name (optional)</label>
+              <input 
+                className="input" 
+                value={name} 
+                onChange={e => setName(e.target.value)}
+                placeholder="Your full name"
+              />
+            </div>
+          </div>
+          
+          <button className="button" type="submit" disabled={loading} style={{ width: '100%', padding: '14px 20px', fontSize: 16 }}>
+            {loading ? '⟳ Signing in...' : '→ Continue'}
+          </button>
+          
+          {error && (
+            <div style={{ 
+              marginTop: 16, 
+              padding: '12px 16px', 
+              background: 'rgba(227,76,76,0.1)', 
+              border: '2px solid rgba(227,76,76,0.3)',
+              borderRadius: 12,
+              color: '#e34c4c',
+              fontWeight: 600,
+              fontSize: 14
+            }}>
+              ⚠️ {error}
+            </div>
+          )}
+        </form>
+        
+        <div className="login-footer">
+          <p style={{ margin: 0, fontSize: 13, color: '#5b718c' }}>
+            🔒 Secure authentication • 🎯 Role-based access
+          </p>
         </div>
-        <div style={{ gridColumn: '1 / span 2' }}>
-          <button className="button" type="submit" disabled={loading}>{loading ? 'Signing in...' : 'Continue'}</button>
-          {error && <div style={{ color: 'crimson', marginTop: 8 }}>{error}</div>}
-        </div>
-      </form>
+      </div>
     </div>
   );
 }

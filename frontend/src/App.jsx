@@ -15,6 +15,7 @@ export default function App() {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
   const [view, setView] = useState('equipment');
+  const [requestFilter, setRequestFilter] = useState(null);
 
   useEffect(() => {
     const savedToken = localStorage.getItem('gearguard_token');
@@ -40,6 +41,11 @@ export default function App() {
     localStorage.removeItem('gearguard_user');
   }
 
+  function openEquipmentRequests(equipmentId) {
+    setRequestFilter(equipmentId);
+    setView('kanban');
+  }
+
   if (!token) {
     return (
       <div className="app-shell">
@@ -51,7 +57,7 @@ export default function App() {
   return (
     <div className="app-shell">
       <header className="header">
-        <div className="brand">GearGuard</div>
+        <div className="brand">⚙️ Guardians</div>
         <nav className="nav">
           {views.map(v => (
             <button key={v.key} className={view === v.key ? 'active' : ''} onClick={() => setView(v.key)}>
@@ -68,8 +74,8 @@ export default function App() {
         </div>
       </header>
       <main className="main">
-        {view === 'equipment' && <EquipmentPage api={api} user={user} />}
-        {view === 'kanban' && <KanbanPage api={api} user={user} />}
+        {view === 'equipment' && <EquipmentPage api={api} user={user} onOpenRequests={openEquipmentRequests} />}
+        {view === 'kanban' && <KanbanPage api={api} user={user} filterEquipmentId={requestFilter} clearFilter={() => setRequestFilter(null)} />}
         {view === 'calendar' && <CalendarPage api={api} user={user} />}
       </main>
     </div>

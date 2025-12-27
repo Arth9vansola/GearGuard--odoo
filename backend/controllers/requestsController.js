@@ -35,7 +35,10 @@ export async function listRequests(req, res) {
     const where = status ? 'WHERE r.status = $1' : '';
     const params = status ? [status] : [];
     const result = await query(
-      `SELECT r.*, e.name AS equipment_name, u.name AS technician_name, u.avatar_url
+      `SELECT r.id, r.subject, r.request_type, r.equipment_id, r.maintenance_team_id, 
+              r.assigned_technician, TO_CHAR(r.scheduled_date, 'YYYY-MM-DD') as scheduled_date, 
+              r.duration_hours, r.status, r.created_at,
+              e.name AS equipment_name, u.name AS technician_name, u.avatar_url
        FROM maintenance_requests r
        LEFT JOIN equipment e ON r.equipment_id = e.id
        LEFT JOIN users u ON r.assigned_technician = u.id

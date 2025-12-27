@@ -20,6 +20,7 @@ export default function CalendarPage({ api, user }) {
       alert('Only managers can create preventive requests');
       return;
     }
+    console.log('Creating request for date:', date); // Debug log
     try {
       await api.post('/requests', {
         subject: form.subject,
@@ -45,7 +46,7 @@ export default function CalendarPage({ api, user }) {
   return (
     <div className="grid-2">
       <div className="card">
-        <h3 style={{ marginTop: 0 }}>Preventive Calendar</h3>
+        <h3 style={{ marginTop: 0, fontSize: 24, background: 'linear-gradient(135deg, #1ea896, #6c5ce7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>📅 Preventive Calendar</h3>
         <div className="calendar-grid">
           {days.map(day => {
             const key = format(day, 'yyyy-MM-dd');
@@ -53,6 +54,7 @@ export default function CalendarPage({ api, user }) {
             return (
               <div key={key} className="calendar-day" onClick={() => create(key)}>
                 <h4>{format(day, 'MMM d')}</h4>
+                <div style={{ fontSize: 10, color: '#999', marginBottom: 4 }}>{key}</div>
                 <div className="day-requests">
                   {dayReqs.map(r => (
                     <div key={r.id} className="calendar-pill">{r.subject}</div>
@@ -64,7 +66,7 @@ export default function CalendarPage({ api, user }) {
         </div>
       </div>
       <div className="card">
-        <h3 style={{ marginTop: 0 }}>New preventive request</h3>
+        <h3 style={{ marginTop: 0, fontSize: 20, color: '#1ea896' }}>📝 New Preventive Request</h3>
         <div className="grid-2">
           <div>
             <label>Subject</label>

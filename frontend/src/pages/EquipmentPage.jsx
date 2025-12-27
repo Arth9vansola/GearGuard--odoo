@@ -4,7 +4,7 @@ const emptyForm = {
   name: '', serial_number: '', category: '', purchase_date: '', warranty_info: '', location: '', department: '', assigned_employee: '', maintenance_team_id: ''
 };
 
-export default function EquipmentPage({ api }) {
+export default function EquipmentPage({ api, onOpenRequests }) {
   const [items, setItems] = useState([]);
   const [form, setForm] = useState(emptyForm);
   const [loading, setLoading] = useState(false);
@@ -39,14 +39,14 @@ export default function EquipmentPage({ api }) {
   return (
     <div className="grid-2">
       <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3 style={{ margin: 0 }}>Equipment</h3>
-          {loading && <span style={{ color: '#5b718c' }}>Refreshing...</span>}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+          <h3 style={{ margin: 0, fontSize: 24, background: 'linear-gradient(135deg, #1ea896, #6c5ce7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>🔧 Equipment Inventory</h3>
+          {loading && <span style={{ color: '#5b718c' }}>⟳ Refreshing...</span>}
         </div>
         <table className="table">
           <thead>
             <tr>
-              <th>Name</th><th>Serial</th><th>Location</th><th>Smart Count</th>
+              <th>Name</th><th>Serial</th><th>Location</th><th>Smart Count</th><th>Maintenance</th>
             </tr>
           </thead>
           <tbody>
@@ -56,6 +56,12 @@ export default function EquipmentPage({ api }) {
                 <td>{item.serial_number}</td>
                 <td>{item.location}</td>
                 <td><span className="badge">{item.open_request_count}</span></td>
+                <td>
+                  <button className="button" type="button" style={{ padding: '6px 10px' }}
+                    onClick={() => onOpenRequests?.(item.id)}>
+                    Maintenance
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -63,7 +69,7 @@ export default function EquipmentPage({ api }) {
         {error && <div style={{ color: 'crimson' }}>{error}</div>}
       </div>
       <div className="card">
-        <h3 style={{ marginTop: 0 }}>Add equipment</h3>
+        <h3 style={{ marginTop: 0, fontSize: 20, color: '#1ea896' }}>➕ Add New Equipment</h3>
         <form className="grid-2" onSubmit={submit}>
           {Object.entries({
             name: 'Name', serial_number: 'Serial', category: 'Category', purchase_date: 'Purchase date', warranty_info: 'Warranty', location: 'Location', department: 'Department', assigned_employee: 'Assigned to', maintenance_team_id: 'Team ID'

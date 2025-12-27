@@ -18,13 +18,16 @@ export async function login(req, res) {
       user = insert.rows[0];
     }
 
+    // Use provided name for display, but keep DB name for the user object
+    const displayName = name || user.name;
+
     const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role, name: user.name },
+      { id: user.id, email: user.email, role: user.role, name: displayName },
       process.env.JWT_SECRET,
       { expiresIn: '12h' }
     );
 
-    return res.json({ token, user });
+    return res.json({ token, user: { ...user, name: displayName } });
   } catch (err) {
     return res.status(500).json({ error: 'Login failed', detail: err.message });
   }
