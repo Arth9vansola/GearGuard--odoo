@@ -3,6 +3,9 @@
 ## team details
 # 🏷️ Team Details
 
+## Team Name  
+**Hexagon**
+
 ---
 
 ## 👥 Team Members  
