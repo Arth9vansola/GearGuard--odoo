@@ -4,11 +4,13 @@ import LoginPage from './pages/LoginPage.jsx';
 import EquipmentPage from './pages/EquipmentPage.jsx';
 import KanbanPage from './pages/KanbanPage.jsx';
 import CalendarPage from './pages/CalendarPage.jsx';
+import ReportsPage from './pages/ReportsPage.jsx';
 
 const views = [
   { key: 'equipment', label: 'Equipment' },
   { key: 'kanban', label: 'Kanban' },
-  { key: 'calendar', label: 'Calendar' }
+  { key: 'calendar', label: 'Calendar' },
+  { key: 'reports', label: 'Reports' }
 ];
 
 export default function App() {
@@ -77,6 +79,7 @@ export default function App() {
         {view === 'equipment' && <EquipmentPage api={api} user={user} onOpenRequests={openEquipmentRequests} />}
         {view === 'kanban' && <KanbanPage api={api} user={user} filterEquipmentId={requestFilter} clearFilter={() => setRequestFilter(null)} />}
         {view === 'calendar' && <CalendarPage api={api} user={user} />}
+        {view === 'reports' && <ReportsPage api={api} />}
       </main>
     </div>
   );

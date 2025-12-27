@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import equipmentRoutes from './routes/equipment.js';
 import requestRoutes from './routes/requests.js';
+import reportRoutes from './routes/reports.js';
 import { poolInstance } from './models/db.js';
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.get('/health', async (_req, res) => {
 app.use('/auth', authRoutes);
 app.use('/equipment', equipmentRoutes);
 app.use('/requests', requestRoutes);
+app.use('/reports', reportRoutes);
 
 app.use((req, res) => res.status(404).json({ error: 'Not found' }));
 
